@@ -1,11 +1,13 @@
 import SearchForm from "@/components/SearchForm";
 import SearchResults from "@/components/SearchResults";
 
-export default async function Home({
-  searchParams,
-}: {
+type HomeProps = {
   searchParams: { q?: string }
-}) {
+}
+
+export default function Home({
+  searchParams,
+}: HomeProps) {
   return (
     <main className="px-4 py-8">
       <div className="container mx-auto max-w-7xl">
