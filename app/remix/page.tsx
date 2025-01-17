@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import TweetCard from '@/components/TweetCard'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Loader2, Copy, RefreshCw, Check } from 'lucide-react'
 
-export default function RemixPage() {
+function RemixContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const originalContent = searchParams.get('content')
@@ -139,5 +139,20 @@ export default function RemixPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function RemixPage() {
+  return (
+    <Suspense fallback={
+      <div className="p-4">
+        <Card className="p-6 flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span className="ml-2">Loading...</span>
+        </Card>
+      </div>
+    }>
+      <RemixContent />
+    </Suspense>
   )
 } 
