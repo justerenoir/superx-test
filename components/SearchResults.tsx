@@ -89,12 +89,11 @@ async function getEmbedding(text: string) {
 }
 
 interface SearchResultsProps {
-  searchParams: Promise<{ q?: string }> | { q?: string }
+  searchParams: { q?: string }
 }
 
 export default async function SearchResults({ searchParams }: SearchResultsProps) {
-  const params = await searchParams
-  const query = params?.q
+  const query = searchParams?.q
 
   if (!query) return null
 
