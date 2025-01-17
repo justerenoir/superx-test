@@ -53,20 +53,20 @@ function RemixContent() {
   }
 
   return (
-    <main className="px-4 py-8">
-      <div className="container mx-auto max-w-7xl">
-        <div className="mb-8">
-          <Button
-            onClick={() => router.back()}
-            variant="ghost"
-            className="mb-4"
-          >
-            ← Back
-          </Button>
-          <h1 className="text-3xl font-bold">Remix Post</h1>
-        </div>
+<main className="px-4 py-4 sm:py-8">
+  <div className="container mx-auto max-w-7xl">
+    <div className="mb-6 sm:mb-8">
+      <Button
+        onClick={() => router.back()}
+        variant="ghost"
+        className="mb-4"
+      >
+        ← Back
+      </Button>
+      <h1 className="text-2xl sm:text-3xl font-bold">Remix Post</h1>
+    </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
+    <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Original Post */}
           <div>
             <h2 className="text-xl font-semibold mb-4">Original Post</h2>

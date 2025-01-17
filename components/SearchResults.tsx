@@ -101,12 +101,10 @@ export default async function SearchResults({ searchParams }: SearchResultsProps
     const results = await searchPosts(query)
 
     return (
-      <div className="space-y-8 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-semibold">Search Results for "{query}"</h2>
+      <div className="w-full max-w-5xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-8">Search Results for "{query}"</h2>
         {results && results.length > 0 ? (
-          <>
-            <ClientResults initialPosts={results} />
-          </>
+          <ClientResults initialPosts={results} />
         ) : (
           <Card className="p-6">
             <p>No results found for "{query}". Try a different search term.</p>

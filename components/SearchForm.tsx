@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Search, X } from 'lucide-react'
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { LoadingButton } from "@/components/ui/loading-button"
 
 export default function SearchForm() {
   const router = useRouter()
@@ -18,45 +18,60 @@ export default function SearchForm() {
     
     try {
       if (query.trim()) {
-        // Use replace instead of push to avoid stacking history entries
-        router.replace(`/?q=${encodeURIComponent(query.trim())}`)
+        const searchQuery = encodeURIComponent(query.trim())
+        // Use push instead of replace to ensure navigation triggers
+        router.push(`/?q=${searchQuery}`)
       } else {
-        router.replace('/')
+        router.push('/')
       }
-    } finally {
-      setIsLoading(false)
+    } catch (error) {
+      console.error('Search error:', error)
     }
+    
+    // Add a slight delay before setting loading to false
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
   }
 
   const handleClear = () => {
     setQuery('')
-    router.replace('/')
+    router.push('/')
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex mx-auto max-w-2xl gap-4">
-      <div className="relative w-full">
-        <Input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for posts..."
-          className="pl-10 rounded-3xl"
-        />
-        {query.length > 0 && !isLoading && (
-          <div 
-            className='absolute inset-y-0 right-3 flex items-center text-slate-600 dark:text-gray-400 hover:cursor-pointer'
-            onClick={handleClear}
-          >
-            <X size={18} className="sm:w-5 sm:h-5" />
-          </div>
-        )}
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-      </div>
-      <Button type="submit" disabled={isLoading || !query.trim()}>
-        {isLoading ? 'Searching...' : 'Search'}
-      </Button>
-    </form>
+    <div className="w-full max-w-[500px] mx-auto px-4">
+      <form onSubmit={handleSubmit} className="flex sm:flex-row items-center gap-2 sm:gap-4">
+        <div className="relative flex-1">
+          <Input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search a topic..."
+            className="pl-10 rounded-3xl w-full"
+            disabled={isLoading}
+          />
+          {query.length > 0 && !isLoading && (
+            <div 
+              className='absolute inset-y-0 right-3 flex items-center text-slate-600 dark:text-gray-400 hover:cursor-pointer'
+              onClick={handleClear}
+            >
+              <X size={18} className="sm:w-5 sm:h-5" />
+            </div>
+          )}
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        </div>
+        <LoadingButton 
+          type="submit"
+          isLoading={isLoading}
+          loadingText="Searching..."
+          disabled={!query.trim()}
+          className="sm:w-full sm:w-auto"
+        >
+          Search
+        </LoadingButton>
+      </form>
+    </div>
   )
 }
 

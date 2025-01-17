@@ -18,13 +18,15 @@ export default async function Home({
 
   return (
     <main className="px-4 py-8">
-      <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-8">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
+        <div className="w-full max-w-2xl text-center mb-8">
           <h1 className="text-4xl font-bold mb-4">SuperX Search</h1>
           <p className="text-gray-600">Search for relevant X posts on any topic to get insights and trends</p>
         </div>
-        <div className="space-y-8">
+        <div className="w-full max-w-2xl mb-8">
           <SearchForm />
+        </div>
+        <div className="w-full">
           <SearchResults searchParams={params} />
         </div>
       </div>

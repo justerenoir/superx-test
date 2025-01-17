@@ -20,27 +20,26 @@ export default function ClientResults({ initialPosts }: { initialPosts: any[] })
   }
 
   return (
-    <>
-      <SortButtons onSort={handleSort} />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {posts.map((post: any) => (
-          <div key={post.id} className="relative">
-            <TweetCard
-              content={post.content}
-              author={post.author || "Anonymous"}
-              username={post.username || "@anonymous"}
-              image={post.image || "https://randomuser.me/api/portraits/men/1.jpg"}
-              likes={post.likes || 0}
-              retweets={post.retweets || 0}
-              comments={post.comments || 0}
-              showActionButtons={true}
-            />
-            <div className="absolute bottom-4 left-4 text-sm text-gray-500">
-              Similarity: {(post.similarity * 100).toFixed(1)}%
+    <div className="w-full">
+      <div className="w-full max-w-7xl mx-auto px-4">
+        <SortButtons onSort={handleSort} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {posts.map((post: any) => (
+            <div key={post.id} className="relative">
+              <TweetCard
+                content={post.content}
+                author={post.author || "Anonymous"}
+                username={post.username || "@anonymous"}
+                image={post.image || "https://randomuser.me/api/portraits/men/1.jpg"}
+                likes={post.likes || 0}
+                retweets={post.retweets || 0}
+                comments={post.comments || 0}
+                showActionButtons={true}
+              />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   )
 } 
