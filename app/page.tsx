@@ -1,13 +1,23 @@
 import SearchForm from "@/components/SearchForm";
 import SearchResults from "@/components/SearchResults";
+import { Metadata } from "next";
 
-type HomeProps = {
-  searchParams: { q?: string }
+export const metadata: Metadata = {
+  title: 'SuperX Search',
+  description: 'Search for relevant X posts on any topic to get insights and trends',
+}
+
+interface SearchParams {
+  q?: string;
+}
+
+interface PageProps {
+  searchParams: SearchParams;
 }
 
 export default function Home({
   searchParams,
-}: HomeProps) {
+}: PageProps) {
   return (
     <main className="px-4 py-8">
       <div className="container mx-auto max-w-7xl">
