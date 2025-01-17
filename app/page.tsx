@@ -7,17 +7,15 @@ export const metadata: Metadata = {
   description: 'Search for relevant X posts on any topic to get insights and trends',
 }
 
-interface SearchParams {
-  q?: string;
-}
-
 interface PageProps {
-  searchParams: SearchParams;
+  searchParams: Promise<{ q?: string }>
 }
 
-export default function Home({
+export default async function Home({
   searchParams,
 }: PageProps) {
+  const params = await searchParams
+
   return (
     <main className="px-4 py-8">
       <div className="container mx-auto max-w-7xl">
@@ -27,7 +25,7 @@ export default function Home({
         </div>
         <div className="space-y-8">
           <SearchForm />
-          <SearchResults searchParams={searchParams} />
+          <SearchResults searchParams={params} />
         </div>
       </div>
     </main>
