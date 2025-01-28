@@ -599,5 +599,6 @@ async function seedDatabase() {
 seedDatabase().catch(console.error);
 
 module.exports = {
-  seedDatabase
+  seedDatabase,
+  samplePosts
 };

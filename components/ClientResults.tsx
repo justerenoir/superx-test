@@ -4,7 +4,19 @@ import { useState } from "react"
 import TweetCard from "./TweetCard"
 import SortButtons from "./SortButtons"
 
-export default function ClientResults({ initialPosts }: { initialPosts: any[] }) {
+interface Post {
+  id: string
+  content: string
+  author: string
+  username: string
+  image: string
+  likes: number
+  retweets: number
+  comments: number
+  similarity: number
+}
+
+export default function ClientResults({ initialPosts }: { initialPosts: Post[] }) {
   const [posts, setPosts] = useState(initialPosts)
   const [originalPosts] = useState([...initialPosts])
 
@@ -14,7 +26,7 @@ export default function ClientResults({ initialPosts }: { initialPosts: any[] })
       if (sortBy === 'similarity') {
         return b.similarity - a.similarity
       }
-      return (b[sortBy] || 0) - (a[sortBy] || 0)
+      return (b[sortBy as keyof Post] as number) - (a[sortBy as keyof Post] as number)
     })
     setPosts(sortedPosts)
   }
@@ -24,16 +36,16 @@ export default function ClientResults({ initialPosts }: { initialPosts: any[] })
       <div className="w-full max-w-7xl mx-auto px-4">
         <SortButtons onSort={handleSort} />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {posts.map((post: any) => (
+          {posts.map((post) => (
             <div key={post.id} className="relative">
               <TweetCard
                 content={post.content}
-                author={post.author || "Anonymous"}
-                username={post.username || "@anonymous"}
-                image={post.image || "https://randomuser.me/api/portraits/men/1.jpg"}
-                likes={post.likes || 0}
-                retweets={post.retweets || 0}
-                comments={post.comments || 0}
+                author={post.author}
+                username={post.username}
+                image={post.image}
+                likes={post.likes}
+                retweets={post.retweets}
+                comments={post.comments}
                 showActionButtons={true}
               />
             </div>

@@ -12,15 +12,15 @@ export default function SearchForm() {
   const [query, setQuery] = useState(searchParams.get('q') || '')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (searchQuery?: string) => {
     setIsLoading(true)
     
     try {
-      if (query.trim()) {
-        const searchQuery = encodeURIComponent(query.trim())
+      const finalQuery = searchQuery || query.trim();
+      if (finalQuery) {
+        const encodedQuery = encodeURIComponent(finalQuery)
         // Use push instead of replace to ensure navigation triggers
-        router.push(`/?q=${searchQuery}`)
+        router.push(`/?q=${encodedQuery}`)
       } else {
         router.push('/')
       }
@@ -39,9 +39,23 @@ export default function SearchForm() {
     router.push('/')
   }
 
+  const categories = [
+    'Crypto',
+    'Marketing',
+    'Money Twitter',
+    'Dev/Coding',
+    'Build in Public',
+    'Politics'
+  ];
+
+  const handleCategoryClick = (category: string) => {
+    setQuery(category)
+    handleSubmit(category)
+  }
+
   return (
     <div className="w-full max-w-[500px] mx-auto px-4">
-      <form onSubmit={handleSubmit} className="flex sm:flex-row items-center gap-2 sm:gap-4">
+      <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="flex sm:flex-row items-center gap-2 sm:gap-4">
         <div className="relative flex-1">
           <Input
             type="text"
@@ -71,6 +85,18 @@ export default function SearchForm() {
           Search
         </LoadingButton>
       </form>
+
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className="px-4 py-2 bg-blue-100 border border-blue-300 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-200"
+          >
+            {category}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
